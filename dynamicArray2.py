@@ -33,14 +33,20 @@ class DynamicArray():
         self._Array[self._n] = item
         self._n += 1
         
+    def find(self, item):
+        for i in range(self._n):
+            if self._Array[i] == item:
+                return i 
+        return -1
+
     def insert(self, index, item):
         if not 0 <= index <= self._n: 
             raise ValueError("invalid index")
         if self._n == self._capacity:
             self._resize(2 *  self._capacity)
-        for j in range(self._n, j, -1):
+        for j in range(self._n, index, -1):
             self._Array[j] = self[j - 1]
-        self._Array[j] = item
+        self._Array[index] = item
         self._n += 1
 
     def remove(self, item):
@@ -112,9 +118,20 @@ if __name__ == '__main__':
     list.remove(5)
     for i in range(len(list)):
         print("The value at index {0} is: {1}".format(i, list[i]))
+    print("Inserting 5 back into the list at index 1...")
+    list.insert(1, 5)
+    for i in range(len(list)):
+        print("The value at index {0} is: {1}".format(i, list[i]))
     for i in range(10):
         list.append(i)
         print("Appending {0}... now the capacity is {1}".format(i, list.capacity()))
     for i in range(10):
         list.pop()
         print("Popping last element... now the capacity is {0}".format(list.capacity()))
+    for i in range(len(list)):
+        print("The value at index {0} is: {1}".format(i, list[i]))
+    found_index = list.find(2)
+    if found_index >= 0:
+        print(".find() worked and found 2 at index {0}".format(found_index))
+    else: 
+        print(".find() did not find 2")
