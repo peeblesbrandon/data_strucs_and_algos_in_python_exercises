@@ -46,6 +46,33 @@ class LinkedQueue:
             raise Empty('queue is empty')
         return self._tail._element
 
+    def insert(self, index, e):
+        # to do
+        return
+
+    def reverse(self):
+        # to do
+        return
+
+    def value_at(self, index):
+        # to do
+        return
+
+    def remove(self, e):
+        # to do
+        return
+
+    def print(self):
+        print('Elements in queue: ', end='')
+        curr = self._head
+        while curr:
+            print(curr._element, end='')
+            curr = curr._next
+            if curr:
+                print(', ', end='')
+            else:
+                print('')
+
 
 # helper class for handling empty error
 class Empty(Exception):
@@ -62,4 +89,5 @@ if __name__ == '__main__':
         q.enqueue(i)
     assert len(q) == 5, "length of queue should now equal 5"
     assert q.dequeue() == 0, "Dequeing should return the element added first from head of queue: 0"
+    q.print()
     print("All tests passed!")
