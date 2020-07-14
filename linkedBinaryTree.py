@@ -18,6 +18,11 @@ class Node:
         self._left = left 
         self._right = right 
 
+    def is_leaf(self):
+        if self._left == None and self._right == None:
+            return True
+        return False
+
 class BinaryTree():
     def __init__(self):
         self._root = None 
@@ -65,6 +70,32 @@ class BinaryTree():
             print(str(cur_node._value), end=', ')  # visit node
             self._inorder_print(cur_node._right)  # traverse right side
 
+    def preorder_print(self):
+        if self._root == None:
+            raise Exception('Binary Tree is empty')
+        else:
+            self._preorder_print(self._root)
+            print()
+
+    def _preorder_print(self, cur_node):
+        if cur_node != None:
+            print(str(cur_node._value), end=', ')
+            self._preorder_print(cur_node._left)
+            self._preorder_print(cur_node._right)
+
+    def postorder_print(self):
+        if self._root == None:
+            raise Exception('Binary Tree is empty')
+        else:
+            self._postorder_print(self._root)
+            print()
+
+    def _postorder_print(self, cur_node):
+        if cur_node != None:
+            self._postorder_print(cur_node._left)
+            self._postorder_print(cur_node._right)
+            print(str(cur_node._value), end=', ')
+
     def contains(self, value):
         return self._contains(value, self._root)
     
@@ -91,6 +122,14 @@ class BinaryTree():
         elif value > cur_node._value:
             return self._find(value, cur_node._right)           # search right subtree
 
+    def height(self):
+        return self._height(self._root)
+
+    def _height(self, cur_node):
+        if cur_node == None or cur_node.is_leaf():
+            return 0
+        else:
+            return 1 + max(self._height(cur_node._left), self._height(cur_node._right)) #self._children if it wasnt a BST
 
 # tests
 if __name__ == '__main__':
@@ -98,12 +137,24 @@ if __name__ == '__main__':
     bst = BinaryTree()
     print(f'Starting length is {len(bst)}')
     print('Inserting 100 random integers')
-    for i in range(100):
-        while bst.insert(randint(0, 1000)) is not True:
-            continue
+    # for i in range(100):
+    #     while bst.insert(randint(0, 1000)) is not True:
+    #         continue
+    bst.insert(5)
+    bst.insert(8)
+    bst.insert(2)
+    bst.insert(7)
+    bst.insert(4)
+    bst.insert(1)
+    bst.insert(10)
     bst.insert(1008)
     print(f'Length is {len(bst)}')
     print('Printing all values in tree in order...') 
     bst.inorder_print()   
     print(bst.contains(1008))    
     print(bst.find(1008)) 
+    print(bst.height())
+    print('Preorder traversal of tree...')
+    bst.preorder_print()
+    print('Postorder traversal of tree...')
+    bst.postorder_print()
