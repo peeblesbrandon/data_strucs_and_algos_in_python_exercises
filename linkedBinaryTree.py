@@ -7,7 +7,7 @@
 # print (in-order traversal)
 # height
 # contains (return boolean)
-# find (return node or false)
+# find (return node or None)
 # delete (get to later)
 
 class Node:
@@ -78,8 +78,21 @@ class BinaryTree():
         elif value > cur_node._value:
             return self._contains(value, cur_node._right)      # search right subtree
 
+    def find(self, value):
+        return self._find(value, self._root)
+    
+    def _find(self, value, cur_node):
+        if cur_node == None:
+            return None                                        # value not found
+        elif value == cur_node._value:
+            return cur_node                                     # found value - return node
+        elif value < cur_node._value:
+            return self._find(value, cur_node._left)            # search left subtree
+        elif value > cur_node._value:
+            return self._find(value, cur_node._right)           # search right subtree
 
 
+# tests
 if __name__ == '__main__':
     from random import randint
     bst = BinaryTree()
@@ -92,4 +105,5 @@ if __name__ == '__main__':
     print(f'Length is {len(bst)}')
     print('Printing all values in tree in order...') 
     bst.inorder_print()   
-    print(bst.contains(500))     
+    print(bst.contains(1008))    
+    print(bst.find(1008)) 
