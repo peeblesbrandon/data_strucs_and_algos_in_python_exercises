@@ -57,6 +57,7 @@ class BinaryTree():
             raise Exception("Binary Tree is empty")
         else: 
             self._inorder_print(self._root)
+            print()
 
     def _inorder_print(self, cur_node):
         if cur_node != None:
@@ -68,14 +69,15 @@ class BinaryTree():
         return self._contains(value, self._root)
     
     def _contains(self, value, cur_node):
-        if value == cur_node._value:
-            return True                                 # found value
+        if cur_node == None:
+            return False                                       # value not found
+        elif value == cur_node._value:
+            return True                                        # found value
         elif value < cur_node._value:
-            self._contains(value, cur_node._left)       # search left subtree
+            return self._contains(value, cur_node._left)       # search left subtree
         elif value > cur_node._value:
-            self._contains(value, cur_node._right)      # search right subtree
-        else:
-            return False                                # value not found
+            return self._contains(value, cur_node._right)      # search right subtree
+
 
 
 if __name__ == '__main__':
@@ -90,4 +92,4 @@ if __name__ == '__main__':
     print(f'Length is {len(bst)}')
     print('Printing all values in tree in order...') 
     bst.inorder_print()   
-    print(bst.contains(1008))     
+    print(bst.contains(500))     
