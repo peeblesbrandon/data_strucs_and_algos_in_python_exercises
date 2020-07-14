@@ -131,6 +131,24 @@ class BinaryTree():
         else:
             return 1 + max(self._height(cur_node._left), self._height(cur_node._right)) #self._children if it wasnt a BST
 
+    def delete(self, node):
+        if node._left and node._right:
+            raise ValueError("Cannot delete node with two children")
+        child = node._left if node._left else node._right # get child which could be None
+        if child is not None:
+            child._parent = node._parent
+        if node == self._root:
+            self._root = child 
+        else: 
+            parent = node._parent 
+            if node is parent._left:
+                parent._left = child
+            else:
+                parent._right = child
+        self._size -= 1
+        node._parent = node                 # convention for deprecated node
+        return node._value
+
 # tests
 if __name__ == '__main__':
     from random import randint
@@ -158,3 +176,7 @@ if __name__ == '__main__':
     bst.preorder_print()
     print('Postorder traversal of tree...')
     bst.postorder_print()
+    node = bst.find(8)
+    print(bst.delete(node))
+
+
