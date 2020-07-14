@@ -149,6 +149,18 @@ class BinaryTree():
         node._parent = node                 # convention for deprecated node
         return node._value
 
+    def is_binary_search_tree(self):
+        return self._is_binary_search_tree(self._root)
+
+    def _is_binary_search_tree(self, cur_node, min=-float('inf'), max=float('inf')):
+        if cur_node == None:
+            return True 
+        print(f"checking node {cur_node._value} is between {min} and {max} (inclusive)")
+        if cur_node._value < min or cur_node._value > max:
+            return False
+        return self._is_binary_search_tree(cur_node._left, min, cur_node._value - 1) and self._is_binary_search_tree(cur_node._right, cur_node._value + 1, max)
+
+
 # tests
 if __name__ == '__main__':
     from random import randint
@@ -176,7 +188,7 @@ if __name__ == '__main__':
     bst.preorder_print()
     print('Postorder traversal of tree...')
     bst.postorder_print()
-    node = bst.find(8)
-    print(bst.delete(node))
-
+    node = bst.find(4)
+    print("Deleted node with value of:", bst.delete(node))
+    print(bst.is_binary_search_tree())
 
