@@ -161,6 +161,21 @@ class BinaryTree():
         return self._is_binary_search_tree(cur_node._left, min, cur_node._value - 1) and self._is_binary_search_tree(cur_node._right, cur_node._value + 1, max)
 
 
+    def level_order_traversal(self):
+        if self._root is not None:
+            from collections import deque
+            queue = deque()    
+            queue.append(self._root)
+            while len(queue) != 0:
+                cur_node = queue.popleft()
+                print(str(cur_node._value))
+                if cur_node._left:
+                    queue.append(cur_node._left)
+                if cur_node._right:
+                    queue.append(cur_node._right)
+
+
+
 # tests
 if __name__ == '__main__':
     from random import randint
@@ -190,5 +205,6 @@ if __name__ == '__main__':
     bst.postorder_print()
     node = bst.find(4)
     print("Deleted node with value of:", bst.delete(node))
-    print(bst.is_binary_search_tree())
-
+    print("Tree is a binary search tree?", bst.is_binary_search_tree())
+    print("Printing with level order traversal...")
+    bst.level_order_traversal()
