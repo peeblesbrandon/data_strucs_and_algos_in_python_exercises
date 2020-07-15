@@ -155,7 +155,7 @@ class BinaryTree():
     def _is_binary_search_tree(self, cur_node, min=-float('inf'), max=float('inf')):
         if cur_node == None:
             return True 
-        print(f"checking node {cur_node._value} is between {min} and {max} (inclusive)")
+        # print(f"checking node {cur_node._value} is between {min} and {max} (inclusive)")
         if cur_node._value < min or cur_node._value > max:
             return False
         return self._is_binary_search_tree(cur_node._left, min, cur_node._value - 1) and self._is_binary_search_tree(cur_node._right, cur_node._value + 1, max)
@@ -168,23 +168,40 @@ class BinaryTree():
             queue.append(self._root)
             while len(queue) != 0:
                 cur_node = queue.popleft()
-                print(str(cur_node._value))
+                print(str(cur_node._value), end=', ')
                 if cur_node._left:
                     queue.append(cur_node._left)
                 if cur_node._right:
                     queue.append(cur_node._right)
+            print()
 
+    def is_balanced(self):
+        if self._is_balanced(self._root) == -1:
+            return False
+        return True
 
+    def _is_balanced(self, cur_node):
+        # base case, reached leaf
+        if cur_node == None:
+            return 0
+        # check left subtree height
+        left_height = self._is_balanced(cur_node._left)
+        if left_height == -1:
+            return -1           # height call returned imbalance of subtree
+        right_height = self._is_balanced(cur_node._right)
+        if right_height == -1:
+            return -1           # height call returned imbalance of subtree
+        if abs(left_height - right_height) > 1:
+            return -1
+        # else return the height as max of the two subtrees plus one
+        return max(left_height, right_height) + 1
+        
 
 # tests
 if __name__ == '__main__':
     from random import randint
     bst = BinaryTree()
     print(f'Starting length is {len(bst)}')
-    print('Inserting 100 random integers')
-    # for i in range(100):
-    #     while bst.insert(randint(0, 1000)) is not True:
-    #         continue
     bst.insert(5)
     bst.insert(8)
     bst.insert(2)
@@ -208,3 +225,7 @@ if __name__ == '__main__':
     print("Tree is a binary search tree?", bst.is_binary_search_tree())
     print("Printing with level order traversal...")
     bst.level_order_traversal()
+    print("Is tree balanced?", bst.is_balanced())
+    print("Finding and deleting node with value of 1...")
+    bst.delete(bst.find(1))
+    print("Now is tree balanced?", bst.is_balanced())
