@@ -19,14 +19,22 @@ class MinHeap:
     def right(self, j):
         return 2*j + 2 
     
-    # def has_left(self, j): 
+    def has_left(self, j): 
+        return self.left(j) < len(self.heap)    # returns false if index of left child would be beyond current len 
 
-    # def has_right(self, j): 
+    def has_right(self, j): 
+        return self.right(j) < len(self.heap)   # similar to has_left
 
-    # # let i equal position of another element (parent or child)
-    # def swap(self, i, j): 
+    # let i equal position of another element (parent or child)
+    def swap(self, i, j): 
+        self.heap[i], self.heap[j] = self.heap[j], self.heap[i]
         
-    # def upheap(self, j):
+    def upheap(self, j):
+        parent = self.parent(j) # get the parents position
+        if j > 0 and self.heap[j] < self.heap[parent]:
+            self.swap(parent, j)
+            self.upheap(parent)
+        # terminates if j was the root or if it already satisfies heap-order property
 
     # def downheap(self, j):
 
