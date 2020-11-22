@@ -195,6 +195,22 @@ class BinaryTree():
             return -1
         # else return the height as max of the two subtrees plus one
         return max(left_height, right_height) + 1
+
+
+    def inorder_print_iterative(self):
+        stack = []
+        current = self._root
+        while True:
+            if current:
+                stack.append(current)
+                current = current._left
+            elif stack:
+                current = stack.pop()
+                print(current._value, end=", ")
+                current = current._right
+            else:
+                break
+        print()
         
 
 # tests
@@ -220,6 +236,8 @@ if __name__ == '__main__':
     bst.preorder_print()
     print('Postorder traversal of tree...')
     bst.postorder_print()
+    print("Inorder traversal of tree using iterative method...")
+    bst.inorder_print_iterative()
     node = bst.find(4)
     print("Deleted node with value of:", bst.delete(node))
     print("Tree is a binary search tree?", bst.is_binary_search_tree())
@@ -229,3 +247,4 @@ if __name__ == '__main__':
     print("Finding and deleting node with value of 1...")
     bst.delete(bst.find(1))
     print("Now is tree balanced?", bst.is_balanced())
+    
